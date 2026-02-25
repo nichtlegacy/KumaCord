@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#121826"/>
+      <stop offset="100%" stop-color="#1f2937"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <rect x="100" y="80" width="1080" height="560" rx="18" fill="#2b2d31"/>
+  <rect x="130" y="120" width="1020" height="70" rx="10" fill="#1f2330"/>
+  <text x="170" y="164" fill="#f3f4f6" font-family="Arial,sans-serif" font-size="30" font-weight="700">KumaPulse Dashboard</text>
+  <text x="920" y="164" fill="#9ca3af" font-family="Arial,sans-serif" font-size="20">Last updated 2m ago</text>
+
+  <rect x="130" y="220" width="1020" height="85" rx="10" fill="#20242f"/>
+  <text x="160" y="272" fill="#d1fae5" font-family="Arial,sans-serif" font-size="28">✅ API Gateway | Ping: 31ms | 24h: 100.0%</text>
+
+  <rect x="130" y="320" width="1020" height="85" rx="10" fill="#20242f"/>
+  <text x="160" y="372" fill="#fef3c7" font-family="Arial,sans-serif" font-size="28">⚠️ Worker Queue | Ping: 143ms | 24h: 99.2%</text>
+
+  <rect x="130" y="420" width="1020" height="85" rx="10" fill="#20242f"/>
+  <text x="160" y="472" fill="#fee2e2" font-family="Arial,sans-serif" font-size="28">❌ Public Website | Ping: n/a | 24h: 97.1%</text>
+
+  <text x="130" y="580" fill="#9ca3af" font-family="Arial,sans-serif" font-size="22">Single persistent Discord message · Auto-refresh · Chunked embeds</text>
+</svg>
