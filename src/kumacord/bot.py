@@ -203,7 +203,7 @@ class KumaCordBot(commands.Bot):
         if avg_ping is not None and avg_uptime is not None:
             items.append(f"{online} Online 🟢 | avg ping {avg_ping:.0f}ms 📶")
             items.append(f"{online} Online 🟢 | 24h uptime {avg_uptime:.0f}% ⏱️")
-            items.append(f"📶 avg ping {avg_ping:.0f}ms | 24h uptime {avg_uptime:.0f}% ⏱️")
+            items.append(f"avg ping {avg_ping:.0f}ms 📶 | 24h uptime {avg_uptime:.0f}% ⏱️")
         elif avg_ping is not None:
             items.append(f"{online} Online 🟢 | avg ping {avg_ping:.0f}ms 📶")
         elif avg_uptime is not None:
