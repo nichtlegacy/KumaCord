@@ -1,0 +1,17 @@
+services:
+  kumacord:
+    image: ghcr.io/nichtlegacy/kumacord:latest
+    container_name: kumacord
+    environment:
+      - RUNNING_IN_DOCKER=true
+      - DISCORD_BOT_TOKEN=your_token_here
+      - DISCORD_CHANNEL_ID=123456789012345678
+      - KUMA_STATUSPAGE_URL=https://uptime.example.com/status/example
+      - KUMA_API_URL=
+      - KUMA_API_KEY=
+      - REFRESH_INTERVAL=30
+      - DATA_DIR=/app/data
+      - BUTTON_URL=
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
