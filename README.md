@@ -55,8 +55,7 @@ flowchart LR
 .
 ├── assets/
 │   └── dashboard-preview.svg
-├── src/
-│   └── kumacord/
+├── kumacord/
 │   ├── bot.py
 │   ├── config.py
 │   ├── embed_builder.py
@@ -101,7 +100,6 @@ The bot persists message state in `./data/state.json`.
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-pip install -e .
 python main.py
 ```
 
@@ -125,17 +123,6 @@ python main.py
 
 ---
 
-
-## Why `src/` layout?
-
-This project now uses a `src/` layout to prevent accidental local-import side effects and to keep packaging/import behavior consistent between local runs, tests, and Docker.
-
-Benefits:
-- catches missing install/import issues earlier
-- cleaner boundaries between app code and repo root scripts/assets
-- scales better once tests/CI are added
-
----
 
 ## Architecture decision: single runtime vs Cogs
 

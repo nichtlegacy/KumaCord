@@ -2,14 +2,6 @@ from __future__ import annotations
 
 import asyncio
 import logging
-import sys
-from pathlib import Path
-
-# Support direct `python main.py` execution with src-layout without requiring editable install.
-REPO_ROOT = Path(__file__).resolve().parent
-SRC_DIR = REPO_ROOT / "src"
-if str(SRC_DIR) not in sys.path:
-    sys.path.insert(0, str(SRC_DIR))
 
 import aiohttp
 from dotenv import load_dotenv
