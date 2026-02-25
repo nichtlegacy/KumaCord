@@ -1,0 +1,9 @@
+services:
+  kumacord:
+    build: .
+    container_name: kumacord
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
