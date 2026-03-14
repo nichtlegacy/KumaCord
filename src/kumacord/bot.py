@@ -175,6 +175,10 @@ class KumaCordBot(commands.Bot):
             self.state_store.save(self.state)
             return None
 
+    @staticmethod
+    def _is_recoverable_discord_http_error(exc: discord.HTTPException) -> bool:
+        return exc.status == 429 or exc.status >= 500
+
     def _build_presence_items(self, snapshot: DashboardSnapshot) -> list[str]:
         monitors = snapshot.monitors
         total = len(monitors)
@@ -244,9 +248,8 @@ class KumaCordBot(commands.Bot):
         if not self.is_ready():
             return
 
-        channel = await self._resolve_channel()
-
         try:
+            channel = await self._resolve_channel()
             snapshot = await self.provider.fetch_snapshot()
         except AuthenticationError as exc:
             LOGGER.error("Provider authentication error: %s", exc)
@@ -254,15 +257,24 @@ class KumaCordBot(commands.Bot):
         except ProviderError as exc:
             LOGGER.warning("Provider fetch failed (recoverable): %s", exc)
             return
-
-        await self._update_presence(snapshot)
-
-        message = await self._resolve_message(channel)
-        snapshot_with_assets, files, attachments = await self._prepare_snapshot_assets(snapshot, message)
-        render = self.embed_builder.build(snapshot_with_assets)
-        view = self._build_view()
+        except discord.HTTPException as exc:
+            if self._is_recoverable_discord_http_error(exc):
+                LOGGER.warning(
+                    "Discord API request failed during status sync (recoverable, status %s): %s",
+                    exc.status,
+                    exc,
+                )
+                return
+            raise
 
         try:
+            await self._update_presence(snapshot)
+
+            message = await self._resolve_message(channel)
+            snapshot_with_assets, files, attachments = await self._prepare_snapshot_assets(snapshot, message)
+            render = self.embed_builder.build(snapshot_with_assets)
+            view = self._build_view()
+
             if message is None:
                 message = await channel.send(embeds=render.embeds, files=files, view=view)
                 self.state.message_id = message.id
@@ -279,8 +291,12 @@ class KumaCordBot(commands.Bot):
                     )
                 LOGGER.info("Dashboard updated (%s embeds)", len(render.embeds))
         except discord.HTTPException as exc:
-            if exc.status == 429:
-                LOGGER.warning("Discord rate limit hit while updating dashboard")
+            if self._is_recoverable_discord_http_error(exc):
+                LOGGER.warning(
+                    "Discord API request failed during status sync (recoverable, status %s): %s",
+                    exc.status,
+                    exc,
+                )
                 return
             raise
 
